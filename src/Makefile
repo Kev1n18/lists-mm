@@ -1,3 +1,9 @@
+UNAME := $(shell uname)
+ifeq ($(UNAME), Linux)
+COV=gcovr -f
+else
+COV=gcov -b
+endif
 CC=gcc
 CFLAGS=-g -Wall -Wextra --coverage
 OBJ=singly_linked_list_mm.o memory_manager.o
@@ -16,9 +22,8 @@ unity.o: $(UNITY)
 	$(CC) -c $(CFLAGS) $^ -o $@
 
 cov: clean tests
-	./tests
-	gcovr -f singly_linked_list_mm.c
-
+	./tests	
+	$(COV) singly_linked_list_mm
 .PHONY: clean
 clean:
-	rm -f *.o *.gcda *.gcno main tests
+	rm -f *.o *.gcda *.gcno *.gcov main tests
