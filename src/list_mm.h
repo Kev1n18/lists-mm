@@ -46,7 +46,7 @@ Element list_get(ListMM list, size_t position);
 // first occurrence of the specified element,
 // or -1 if the specified element does not
 // occur in the list.
-int list_find(ListMM list, Element* element);
+int list_find(ListMM list, bool (*equal)(Element*, Element*), Element* element);
 
 // Inserts the specified element at the first position in the list.
 void list_insert_first(ListMM list, Element* element);

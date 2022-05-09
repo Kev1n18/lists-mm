@@ -27,6 +27,10 @@ void delete_list_file() {
 #endif
 }
 
+bool equal_elements(Element* first, Element* second) {
+    return first->value == second->value;
+}
+
 void setUp(void) {
     delete_list_file();
     list = list_create(LIST_FILE_NAME);
@@ -113,12 +117,12 @@ void test_find() {
     list_insert_last(list, &data[2]);
     list_insert_last(list, &data[3]);
     list_insert_last(list, &data[4]);
-    TEST_ASSERT_EQUAL(-1, list_find(list, &data[5]));
-    TEST_ASSERT_EQUAL(0, list_find(list, &data[0]));
-    TEST_ASSERT_EQUAL(1, list_find(list, &data[1]));
-    TEST_ASSERT_EQUAL(2, list_find(list, &data[2]));
-    TEST_ASSERT_EQUAL(3, list_find(list, &data[3]));
-    TEST_ASSERT_EQUAL(4, list_find(list, &data[4]));
+    TEST_ASSERT_EQUAL(-1, list_find(list, equal_elements, &data[5]));
+    TEST_ASSERT_EQUAL(0, list_find(list, equal_elements, &data[0]));
+    TEST_ASSERT_EQUAL(1, list_find(list, equal_elements, &data[1]));
+    TEST_ASSERT_EQUAL(2, list_find(list, equal_elements, &data[2]));
+    TEST_ASSERT_EQUAL(3, list_find(list, equal_elements, &data[3]));
+    TEST_ASSERT_EQUAL(4, list_find(list, equal_elements, &data[4]));
 }
 
 void test_remove_first() {

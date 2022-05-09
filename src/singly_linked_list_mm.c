@@ -148,13 +148,14 @@ void list_insert(ListMM list, Element* element, size_t position) {
 // first occurrence of the specified element,
 // or -1 if the specified element does not
 // occur in the list.
-int list_find(ListMM list, Element* element) {
+int list_find(ListMM list, bool (*equal)(Element*, Element*), Element* element) {
     int position = 0;
     FileCell cell = list->index.head;
     Node_ node;
     read_cell(list->file_mem, cell, (void*)&node);
     while (cell != NULL_CELL) {
-        if (memcmp(&node.element, element, sizeof(Element)) != 0) {
+        // if (memcmp(&node.element, element, sizeof(Element)) != 0) {
+        if (!equal(&node.element, element)) {
             cell = node.next;
             read_cell(list->file_mem, cell, (void*)&node);
             position++;
@@ -216,7 +217,7 @@ Element list_remove_first(ListMM list) {
         list->index.head = node.next;
         list->index.size--;
         write_index(list->file_mem, (void*)&(list->index));
-        
+
         free_cell(list->file_mem, cell);
     }
     return element;
@@ -272,7 +273,7 @@ Element list_remove(ListMM list, size_t position) {
 
         prev_node.next = node.next;
         write_cell(list->file_mem, prev_cell, (void*)&prev_node);
-        
+
         list->index.size--;
         write_index(list->file_mem, (void*)&(list->index));
         free_cell(list->file_mem, cell);
