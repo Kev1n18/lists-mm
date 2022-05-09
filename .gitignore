@@ -1,0 +1,5 @@
+*gcov
+*gcno
+*gcda
+*.o
+.vscode/*
