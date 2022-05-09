@@ -16,8 +16,4 @@ jobs:
     - name: Test with unity and report coverage
       run: |
         pip install gcovr
-<<<<<<< HEAD
         make cov
-=======
-        make cov
->>>>>>> 38aa7aad399f68cac550c63f397ef60fa10a9f97
